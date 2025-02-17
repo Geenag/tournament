@@ -1,5 +1,6 @@
 package com.ippon.vluce
 
+import com.ippon.vluce.infrastructure.plugins.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -9,7 +10,6 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureSerialization()
     configureFrameworks()
-    configureDatabases()
     configureHTTP()
     configureRouting()
 }
