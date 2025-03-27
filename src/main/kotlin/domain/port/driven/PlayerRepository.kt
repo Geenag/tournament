@@ -4,7 +4,7 @@ interface PlayerRepository {
 
     fun addPlayer(pseudo: String);
 
-    fun updateScore(pseudo: String);
+    fun updateScoreByPseudo(pseudo: String, score: Int);
 
     fun getByPseudo(pseudo: String);
 
