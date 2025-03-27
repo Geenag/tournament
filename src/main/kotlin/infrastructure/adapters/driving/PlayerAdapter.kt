@@ -23,5 +23,11 @@ fun Route.playerRouting() {
             playerServiceKoin.resetTournamentDatas()
             call.respondText { "Tous les joueurs ont été supprimés, prêt pour un nouveau tournoi !" }
         }
+        put("{pseudo?}") {
+            val pseudoPlayer = call.parameters["pseudo"] ?: return@put call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
+            val score = call.receive<Int>()
+            playerServiceKoin.changePlayerScore(pseudoPlayer, score)
+            call.respondText("Score du joueur $pseudoPlayer modifié",status = HttpStatusCode.OK)
+        }
     }
 }

@@ -13,7 +13,7 @@ class PlayerServiceImpl : PlayerService {
     }
 
     override fun changePlayerScore(pseudo: String, score: Int) {
-        TODO("Not yet implemented")
+        playerRepository.updateScoreByPseudo(pseudo, score)
     }
 
     override fun getPlayerInformations(pseudo: String) {

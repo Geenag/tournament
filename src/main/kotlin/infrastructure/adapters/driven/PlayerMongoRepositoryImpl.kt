@@ -14,7 +14,7 @@ class PlayerMongoRepositoryImpl() : PlayerRepository {
         .getDatabase().getCollection("player")
 
     override fun addPlayer(pseudo: String) {
-        playerCollection.insertOne(Document("pseudo", pseudo))
+        playerCollection.insertOne(Document("pseudo", pseudo).append("score", 0))
     }
 
     override fun updateScoreByPseudo(pseudo: String, score: Int) {
