@@ -14,6 +14,14 @@ fun Route.playerRouting() {
     val playerServiceKoin by inject<PlayerService>()
 
     route("player") {
+        get("{pseudo?}"){
+            val pseudo = call.parameters["pseudo"]
+                ?: return@get call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
+            val player = playerServiceKoin.getPlayerInformations(pseudo)
+                ?: return@get call.respondText  ("Pas de joueur trouvé avec le pseudo \"$pseudo\"", status = HttpStatusCode.BadRequest)
+            call.respond(player)
+        }
+
         post {
             val playerDTO = call.receive<PlayerDTO>()
             playerServiceKoin.createPlayer(playerDTO.pseudo)
