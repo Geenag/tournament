@@ -18,7 +18,12 @@ class PlayerServiceImpl : PlayerService {
     }
 
     override fun getPlayerInformations(pseudo: String): Player? {
-        return playerRepository.getByPseudo(pseudo)
+        val player = playerRepository.getByPseudo(pseudo)
+        return player?.also {
+            it.ranking = playerRepository.getAllOrderByScore()
+                .withIndex()
+                .first { player -> player.value.pseudo == pseudo }.index + 1
+        }
     }
 
     override fun getRanking(): List<Player> {

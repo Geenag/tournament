@@ -2,6 +2,7 @@ package com.ippon.vluce.infrastructure.adapters.driving
 
 import com.ippon.vluce.domain.service.PlayerService
 import com.ippon.vluce.infrastructure.adapters.driving.dto.PlayerDTO
+import com.ippon.vluce.infrastructure.adapters.driving.dto.mapper.toPlayerDTO
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -30,7 +31,7 @@ fun Route.playerRouting() {
         get("ranking") {
             val listPlayer = playerServiceKoin.getRanking()
             if(listPlayer.isNotEmpty()){
-                call.respond(listPlayer)
+                call.respond(listPlayer.map { it.toPlayerDTO() })
             } else {
                 return@get call.respondText("Pas de joueur trouvé", status = HttpStatusCode.NoContent)
             }
