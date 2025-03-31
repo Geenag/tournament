@@ -6,5 +6,5 @@ import org.bson.Document
 fun Document.toPlayer(): Player = Player(
     this.getObjectId("_id").toString(),
     this.getString("pseudo"),
-    this.getInteger("score")
+    this.getInteger("score") ?: 0
 )

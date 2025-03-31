@@ -6,6 +6,7 @@ import com.ippon.vluce.infrastructure.adapters.driven.configuration.TournamentDa
 import com.ippon.vluce.infrastructure.adapters.driven.mapper.toPlayer
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Sorts
 import com.mongodb.client.model.Updates
 import org.bson.Document
 
@@ -30,7 +31,8 @@ class PlayerMongoRepositoryImpl() : PlayerRepository {
     }
 
     override fun getAllOrderByScore(): List<Player> {
-        TODO("Not yet implemented")
+        val sort = Sorts.orderBy(Sorts.descending(Player::score.name))
+        return playerCollection.find().sort(sort).toList().map { it.toPlayer() }
     }
 
     override fun deleteAll() {

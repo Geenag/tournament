@@ -27,6 +27,14 @@ fun Route.playerRouting() {
             playerServiceKoin.createPlayer(playerDTO.pseudo)
             call.respondText("Joueur ${playerDTO.pseudo} créé et stocké",status = HttpStatusCode.Created)
         }
+        get("ranking") {
+            val listPlayer = playerServiceKoin.getRanking()
+            if(listPlayer.isNotEmpty()){
+                call.respond(listPlayer)
+            } else {
+                return@get call.respondText("Pas de joueur trouvé", status = HttpStatusCode.NoContent)
+            }
+        }
         delete {
             playerServiceKoin.resetTournamentDatas()
             call.respondText { "Tous les joueurs ont été supprimés, prêt pour un nouveau tournoi !" }
