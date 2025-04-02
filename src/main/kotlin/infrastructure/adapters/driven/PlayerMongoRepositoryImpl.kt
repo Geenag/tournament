@@ -1,7 +1,7 @@
 package com.ippon.vluce.infrastructure.adapters.driven
 
 import com.ippon.vluce.domain.model.Player
-import com.ippon.vluce.domain.port.driven.PlayerRepository
+import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.infrastructure.adapters.driven.configuration.TournamentDatabase
 import com.ippon.vluce.infrastructure.adapters.driven.mapper.toPlayer
 import com.mongodb.client.MongoCollection
