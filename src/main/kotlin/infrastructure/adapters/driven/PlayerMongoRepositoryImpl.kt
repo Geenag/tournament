@@ -4,6 +4,7 @@ import com.ippon.vluce.domain.model.Player
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.infrastructure.adapters.driven.configuration.TournamentDatabase
 import com.ippon.vluce.infrastructure.adapters.driven.mapper.toPlayer
+import com.mongodb.MongoException
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Sorts
@@ -22,7 +23,7 @@ class PlayerMongoRepositoryImpl() : PlayerRepository {
     override fun updateScoreByPseudo(pseudo: String, score: Int) {
         val filter = Filters.eq(Player::pseudo.name, pseudo)
         val update = Updates.set(Player::score.name, score)
-        playerCollection.findOneAndUpdate(filter, update)
+        playerCollection.findOneAndUpdate(filter, update) ?: throw MongoException("Could not find any player with pseudo $pseudo")
     }
 
     override fun getByPseudo(pseudo: String): Player? {

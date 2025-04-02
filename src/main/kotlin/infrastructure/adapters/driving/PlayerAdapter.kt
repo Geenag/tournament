@@ -3,6 +3,7 @@ package com.ippon.vluce.infrastructure.adapters.driving
 import com.ippon.vluce.domain.usecases.*
 import com.ippon.vluce.infrastructure.adapters.driving.dto.PlayerDTO
 import com.ippon.vluce.infrastructure.adapters.driving.dto.mapper.toPlayerDTO
+import com.mongodb.MongoException
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -25,10 +26,14 @@ fun Route.playerRouting() {
             call.respondText("Joueur ${playerDTO.pseudo} créé et stocké",status = HttpStatusCode.Created)
         }
         put("{pseudo?}") {
-            val pseudoPlayer = call.parameters["pseudo"] ?: return@put call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
+            val pseudo = call.parameters["pseudo"] ?: return@put call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
             val score = call.receive<Int>()
-            changePlayerScoreUseCase.execute(pseudoPlayer, score)
-            call.respondText("Score du joueur $pseudoPlayer modifié",status = HttpStatusCode.OK)
+            try {
+                changePlayerScoreUseCase.execute(pseudo, score)
+                call.respondText("Score du joueur $pseudo modifié",status = HttpStatusCode.OK)
+            } catch (exception: MongoException) {
+                call.respondText("Pas de joueur trouvé avec le pseudo \"$pseudo\"")
+            }
         }
         get("{pseudo?}"){
             val pseudo = call.parameters["pseudo"]
