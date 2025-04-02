@@ -15,7 +15,7 @@ import org.koin.dsl.module
 import org.koin.java.KoinJavaComponent
 import org.koin.test.KoinTest
 
-class GetRankingUseCaseTest: KoinTest, DescribeSpec({
+class GetRankingUseCaseTU: KoinTest, DescribeSpec({
 
     val playerRepository: PlayerRepository = mockk<PlayerRepository>()
     val getRankingUseCase: GetRankingUseCase by KoinJavaComponent.inject(GetRankingUseCase::class.java)

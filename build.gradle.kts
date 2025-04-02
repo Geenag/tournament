@@ -41,4 +41,8 @@ dependencies {
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.mockk)
     implementation(libs.koin.test)
+    testImplementation(libs.testcontainers.core)
+    testImplementation(libs.testcontainers.jupiter)
+    testImplementation(libs.testcontainers.mongodb)
+    testImplementation(libs.kotest.extensions.testcontainers)
 }

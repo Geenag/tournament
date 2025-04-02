@@ -1,8 +1,8 @@
 package application.usecases.impl
 
-import com.ippon.vluce.application.usecase.impl.ResetTournamentUseCaseImpl
+import com.ippon.vluce.application.usecase.impl.CreatePlayerUseCaseImpl
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
-import com.ippon.vluce.domain.usecases.ResetTournamentUseCase
+import com.ippon.vluce.domain.usecases.CreatePlayerUseCase
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.*
 import org.koin.core.context.startKoin
@@ -12,14 +12,14 @@ import org.koin.dsl.module
 import org.koin.java.KoinJavaComponent
 import org.koin.test.KoinTest
 
-class ResetTournamentUseCaseTest: KoinTest, DescribeSpec({
+class CreatePlayerUseCaseTU: KoinTest, DescribeSpec({
 
     val playerRepository: PlayerRepository = mockk<PlayerRepository>()
-    val resetTournamentUseCaseTest: ResetTournamentUseCase by KoinJavaComponent.inject(ResetTournamentUseCase::class.java)
+    val createPlayerUseCase: CreatePlayerUseCase by KoinJavaComponent.inject(CreatePlayerUseCase::class.java)
 
     fun playerModuleTest(): Module = module {
         single { playerRepository }
-        single<ResetTournamentUseCase> { ResetTournamentUseCaseImpl() }
+        single<CreatePlayerUseCase> { CreatePlayerUseCaseImpl() }
     }
 
     beforeSpec {
@@ -32,9 +32,10 @@ class ResetTournamentUseCaseTest: KoinTest, DescribeSpec({
         stopKoin()
     }
 
-    it("ResetTournamentUseCase should call deleteAll method from PlayerRepository to reset tournament") {
-        every { playerRepository.deleteAll() } just Runs
-        resetTournamentUseCaseTest.execute()
-        verify(exactly = 1) { playerRepository.deleteAll() }
+    it("CreatePlayerUseCase should call addPlayer method from PlayerRepository to create a new player") {
+        every { playerRepository.addPlayer(any()) } just Runs
+        val pseudo = "Joueur001"
+        createPlayerUseCase.execute(pseudo)
+        verify(exactly = 1) { playerRepository.addPlayer(pseudo) }
     }
 })

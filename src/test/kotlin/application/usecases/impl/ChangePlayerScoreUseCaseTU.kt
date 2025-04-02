@@ -12,7 +12,7 @@ import org.koin.dsl.module
 import org.koin.java.KoinJavaComponent
 import org.koin.test.KoinTest
 
-class ChangePlayerScoreUseCaseTest: KoinTest, DescribeSpec({
+class ChangePlayerScoreUseCaseTU: KoinTest, DescribeSpec({
 
     val playerRepository: PlayerRepository = mockk<PlayerRepository>()
     val changePlayerScoreUseCase: ChangePlayerScoreUseCase by KoinJavaComponent.inject(ChangePlayerScoreUseCase::class.java)
