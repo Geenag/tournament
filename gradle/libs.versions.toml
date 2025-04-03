@@ -9,6 +9,7 @@ kotest-version = "5.9.1"
 mockk-version = "1.13.17"
 testcontainers-version = "1.20.6"
 kotest-extensions-testcontainers-version = "2.0.2"
+kotest-extensions-ktor-version = "2.0.0"
 
 [libraries]
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor-version" }
@@ -33,6 +34,8 @@ testcontainers-core = { module = "org.testcontainers:testcontainers", version.re
 testcontainers-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers-version" }
 testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "testcontainers-version" }
 kotest-extensions-testcontainers = { module = "io.kotest.extensions:kotest-extensions-testcontainers", version.ref = "kotest-extensions-testcontainers-version" }
+kotest-extensions-ktor = { module = "io.kotest.extensions:kotest-assertions-ktor", version.ref = "kotest-extensions-ktor-version" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

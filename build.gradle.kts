@@ -45,4 +45,6 @@ dependencies {
     testImplementation(libs.testcontainers.jupiter)
     testImplementation(libs.testcontainers.mongodb)
     testImplementation(libs.kotest.extensions.testcontainers)
+    implementation(libs.kotest.extensions.ktor)
+    implementation(libs.ktor.client.content.negotiation)
 }
