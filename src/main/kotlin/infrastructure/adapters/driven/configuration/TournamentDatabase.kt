@@ -6,10 +6,9 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 
 object TournamentDatabase {
-    private const val URI = "mongodb+srv://admin:bk5RUGlBQ0x8@clustervlu.vxjrghe.mongodb.net"
-    fun getDatabase() : MongoDatabase {
+    fun getDatabase(uri: String) : MongoDatabase {
         val clientSettings = MongoClientSettings.builder()
-            .applyConnectionString(ConnectionString(URI))
+            .applyConnectionString(ConnectionString(uri))
             .retryWrites(true)
             .build()
         val client = MongoClients.create(clientSettings);

@@ -7,6 +7,6 @@ import com.mongodb.client.MongoDatabase
 import org.koin.dsl.module
 
 val playerRepositoryModule = module {
-    single<MongoDatabase> { TournamentDatabase.getDatabase() }
+    single<MongoDatabase> { TournamentDatabase.getDatabase(get()) }
     single<PlayerRepository> { PlayerMongoRepositoryImpl(get()) }
 }
