@@ -1,4 +1,4 @@
-package com.ippon.vluce
+package com.ippon.vluce.application
 
 import com.ippon.vluce.infrastructure.plugins.*
 import io.ktor.server.application.*

@@ -1,4 +1,4 @@
-package infrastructure.adapters
+package com.ippon.vluce.infrastructure.adapters
 
 import com.ippon.vluce.application.playerUseCaseModule
 import com.ippon.vluce.domain.ports.driven.PlayerRepository

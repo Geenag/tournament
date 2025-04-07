@@ -1,6 +1,6 @@
-package application.usecases.impl
+package com.ippon.vluce.application.usecases.impl
 
-import com.ippon.vluce.application.usecase.impl.GetPlayerInformationsUseCaseImpl
+import com.ippon.vluce.domain.usecases.impl.GetPlayerInformationsUseCaseImpl
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.model.Player
 import com.ippon.vluce.domain.usecases.GetPlayerInformationsUseCase

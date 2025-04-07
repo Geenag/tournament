@@ -1,4 +1,4 @@
-package com.ippon.vluce.application.usecase.impl
+package com.ippon.vluce.domain.usecases.impl
 
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.usecases.ChangePlayerScoreUseCase

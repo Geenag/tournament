@@ -1,4 +1,4 @@
-package infrastructure.adapters.driving
+package com.ippon.vluce.infrastructure.adapters.driving
 
 import com.ippon.vluce.domain.model.Player
 import com.ippon.vluce.domain.usecases.*

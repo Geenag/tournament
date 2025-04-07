@@ -1,4 +1,4 @@
-package infrastructure.adapters.driven
+package com.ippon.vluce.infrastructure.adapters.driven
 
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.infrastructure.adapters.driven.PlayerMongoRepositoryImpl

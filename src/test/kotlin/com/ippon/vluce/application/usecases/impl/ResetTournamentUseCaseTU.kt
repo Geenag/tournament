@@ -1,6 +1,6 @@
-package application.usecases.impl
+package com.ippon.vluce.application.usecases.impl
 
-import com.ippon.vluce.application.usecase.impl.ResetTournamentUseCaseImpl
+import com.ippon.vluce.domain.usecases.impl.ResetTournamentUseCaseImpl
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.usecases.ResetTournamentUseCase
 import io.kotest.core.spec.style.DescribeSpec

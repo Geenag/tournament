@@ -1,7 +1,7 @@
 package com.ippon.vluce.application
 
-import com.ippon.vluce.application.usecase.impl.*
 import com.ippon.vluce.domain.usecases.*
+import com.ippon.vluce.domain.usecases.impl.*
 import org.koin.dsl.module
 
 val playerUseCaseModule = module {
