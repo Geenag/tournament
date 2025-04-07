@@ -1,9 +1,9 @@
 package com.ippon.vluce.application.usecases.impl
 
-import com.ippon.vluce.domain.usecases.impl.GetPlayerInformationsUseCaseImpl
-import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.model.Player
+import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.usecases.GetPlayerInformationsUseCase
+import com.ippon.vluce.domain.usecases.impl.GetPlayerInformationsUseCaseImpl
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -39,7 +39,6 @@ class GetPlayerInformationsUseCaseTU: KoinTest, DescribeSpec({
         it(" should get player from PlayerRepository with given pseudo when exists") {
             val pseudo = "joueur001"
             val player = Player("idPlayer", pseudo, 10, null)
-            every { playerRepository.getByPseudo(pseudo) } returns player
             every { playerRepository.getAllOrderByScore() } returns listOf(player)
             val res = getPlayerInformationsUseCase.execute(pseudo)
             res shouldBe Player("idPlayer", pseudo, 10, 1)
@@ -48,7 +47,6 @@ class GetPlayerInformationsUseCaseTU: KoinTest, DescribeSpec({
             val pseudoSearched = "joueur001"
             val existingPseudo = "joueur002"
             val existingPlayer = Player("idPlayer", existingPseudo, 10, null)
-            every { playerRepository.getByPseudo(pseudoSearched) } returns null
             every { playerRepository.getAllOrderByScore() } returns listOf(existingPlayer)
             val res = getPlayerInformationsUseCase.execute(pseudoSearched)
             res shouldBe null

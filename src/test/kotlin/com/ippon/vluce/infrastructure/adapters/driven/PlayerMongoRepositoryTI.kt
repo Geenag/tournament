@@ -1,7 +1,6 @@
 package com.ippon.vluce.infrastructure.adapters.driven
 
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
-import com.ippon.vluce.infrastructure.adapters.driven.PlayerMongoRepositoryImpl
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClients
@@ -58,7 +57,7 @@ class PlayerMongoRepositoryTI: DescribeSpec ({
         playerRepository.addPlayer(pseudo1)
 
         it("should return player created with id, given pseudo, score 0 and ranking null") {
-            val playerBDD = playerRepository.getByPseudo(pseudo1)
+            val playerBDD = playerRepository.getAllOrderByScore().firstOrNull()
             playerBDD shouldNotBeNull { idPlayer }
             playerBDD!!.pseudo shouldBe pseudo1
             playerBDD.score shouldBe 0

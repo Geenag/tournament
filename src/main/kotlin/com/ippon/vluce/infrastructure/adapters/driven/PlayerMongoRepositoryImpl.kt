@@ -25,11 +25,6 @@ class PlayerMongoRepositoryImpl(datatabase: MongoDatabase) : PlayerRepository {
         playerCollection.findOneAndUpdate(filter, update) ?: throw MongoException("Could not find any player with pseudo $pseudo")
     }
 
-    override fun getByPseudo(pseudo: String): Player? {
-        val filter = Filters.eq(Player::pseudo.name, pseudo)
-        return playerCollection.find(filter).first()?.toPlayer()
-    }
-
     override fun getAllOrderByScore(): List<Player> {
         val sort = Sorts.orderBy(Sorts.descending(Player::score.name))
         return playerCollection.find().sort(sort).toList().map { it.toPlayer() }
