@@ -4,6 +4,7 @@ import com.ippon.vluce.domain.model.Player
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.infrastructure.adapters.driven.mapper.toPlayer
 import com.mongodb.MongoException
+import com.mongodb.MongoWriteException
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
@@ -16,7 +17,11 @@ class PlayerMongoRepositoryImpl(datatabase: MongoDatabase) : PlayerRepository {
     private val playerCollection: MongoCollection<Document> = datatabase.getCollection("player")
 
     override fun addPlayer(pseudo: String) {
-        playerCollection.insertOne(Document("pseudo", pseudo).append("score", 0))
+        try {
+            playerCollection.insertOne(Document("pseudo", pseudo).append("score", 0))
+        } catch (exception: MongoWriteException) {
+            throw exception
+        }
     }
 
     override fun updateScoreByPseudo(pseudo: String, score: Int) {

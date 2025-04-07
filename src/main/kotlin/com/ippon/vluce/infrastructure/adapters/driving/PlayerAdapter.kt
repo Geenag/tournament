@@ -4,6 +4,7 @@ import com.ippon.vluce.domain.usecases.*
 import com.ippon.vluce.infrastructure.adapters.driving.dto.PlayerDTO
 import com.ippon.vluce.infrastructure.adapters.driving.dto.mapper.toPlayerDTO
 import com.mongodb.MongoException
+import com.mongodb.MongoWriteException
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -21,9 +22,13 @@ fun Route.playerRouting() {
 
     route("player") {
         post {
-            val playerDTO = call.receive<PlayerDTO>()
-            createPlayerUseCase.execute(playerDTO.pseudo)
-            call.respondText("Joueur ${playerDTO.pseudo} créé et stocké",status = HttpStatusCode.Created)
+            val pseudo = call.receive<PlayerDTO>().pseudo
+            try {
+                createPlayerUseCase.execute(pseudo)
+                call.respondText("Joueur $pseudo créé et stocké", status = HttpStatusCode.Created)
+            } catch (exception: MongoWriteException) {
+                call.respondText("Le pseudo \"$pseudo\" est déjà utilisé par un joueur. Veuillez en choisir un autre.")
+            }
         }
         put("{pseudo?}") {
             val pseudo = call.parameters["pseudo"] ?: return@put call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
