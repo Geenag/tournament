@@ -44,7 +44,9 @@ class GetRankingUseCaseTU: KoinTest, DescribeSpec({
         val player3 = Player("idPlayer3", pseudoJoueur3, 30, null)
         val expectedRanking = listOf(player3, player2, player1)
         every { playerRepository.getAllOrderByScore() } returns expectedRanking
+
         val res = getRankingUseCase.execute()
+
         res shouldBe expectedRanking
     }
 })

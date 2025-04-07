@@ -35,7 +35,9 @@ class CreatePlayerUseCaseTU: KoinTest, DescribeSpec({
     it("CreatePlayerUseCase should call addPlayer method from PlayerRepository to create a new player") {
         every { playerRepository.addPlayer(any()) } just Runs
         val pseudo = "Joueur001"
+
         createPlayerUseCase.execute(pseudo)
+
         verify(exactly = 1) { playerRepository.addPlayer(pseudo) }
     }
 })

@@ -34,7 +34,9 @@ class ResetTournamentUseCaseTU: KoinTest, DescribeSpec({
 
     it("ResetTournamentUseCase should call deleteAll method from PlayerRepository to reset tournament") {
         every { playerRepository.deleteAll() } just Runs
+
         resetTournamentUseCaseTest.execute()
+
         verify(exactly = 1) { playerRepository.deleteAll() }
     }
 })

@@ -54,10 +54,12 @@ class PlayerMongoRepositoryTI: DescribeSpec ({
     describe("PlayerMongoRepository") {
 
         val pseudo1 = "joueur001"
+
         playerRepository.addPlayer(pseudo1)
 
         it("should return player created with id, given pseudo, score 0 and ranking null") {
             val playerBDD = playerRepository.getAllOrderByScore().firstOrNull()
+
             playerBDD shouldNotBeNull { idPlayer }
             playerBDD!!.pseudo shouldBe pseudo1
             playerBDD.score shouldBe 0
@@ -67,19 +69,23 @@ class PlayerMongoRepositoryTI: DescribeSpec ({
         it("should update scores and return ranked players") {
             val pseudo2 = "joueur002"
             val pseudo3 = "joueur003"
+
             playerRepository.addPlayer(pseudo2)
             playerRepository.addPlayer(pseudo3)
             playerRepository.updateScoreByPseudo(pseudo1, 10)
             playerRepository.updateScoreByPseudo(pseudo2, 20)
             playerRepository.updateScoreByPseudo(pseudo3, 30)
             val ranking = playerRepository.getAllOrderByScore()
+
             ranking.size shouldBe 3
             ranking.map { it.score }.zipWithNext().all { it.first >= it.second } shouldBe true
         }
 
         it("should delete all players in database") {
             playerRepository.getAllOrderByScore().size shouldBeGreaterThan 0
+
             playerRepository.deleteAll()
+            
             playerRepository.getAllOrderByScore().size shouldBe 0
         }
     }

@@ -36,7 +36,9 @@ class ChangePlayerScoreUseCaseTU: KoinTest, DescribeSpec({
         every { playerRepository.updateScoreByPseudo(any(), any()) } just Runs
         val pseudo = "Joueur001"
         val score = 10
+
         changePlayerScoreUseCase.execute(pseudo, score)
+
         verify(exactly = 1) { playerRepository.updateScoreByPseudo(pseudo, score) }
     }
 })

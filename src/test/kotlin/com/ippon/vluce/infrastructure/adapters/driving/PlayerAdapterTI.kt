@@ -69,10 +69,12 @@ class PlayerAdapterTI: DescribeSpec ({
                     }
                 }
                 every { createPlayerUseCase.execute(any()) } just Runs
+
                 val response = client.post("/tournament/player") {
                     contentType(ContentType.Application.Json)
                     setBody(PlayerDTO(pseudo = "joueur001"))
                 }
+
                 response shouldHaveStatus HttpStatusCode.Created
                 response.bodyAsText() shouldBe "Joueur joueur001 créé et stocké"
             }
@@ -92,10 +94,12 @@ class PlayerAdapterTI: DescribeSpec ({
                     }
                 }
                 every { changePlayerScoreUseCase.execute(any(), any()) } just Runs
+
                 val response = client.put("/tournament/player/joueur001") {
                     contentType(ContentType.Application.Json)
                     setBody(10)
                 }
+
                 response shouldHaveStatus HttpStatusCode.OK
                 response.bodyAsText() shouldBe "Score du joueur joueur001 modifié"
             }
@@ -116,7 +120,9 @@ class PlayerAdapterTI: DescribeSpec ({
                 }
                 val expectedPlayer = Player("idPlayer", "joueur001", 10, 1)
                 every { getPlayerInformationsUseCase.execute(any()) } returns expectedPlayer
+
                 val response = client.get("/tournament/player/joueur001")
+
                 response shouldHaveStatus HttpStatusCode.OK
                 val returnedPlayer: Player = response.body()
                 returnedPlayer.shouldNotBeNull()
