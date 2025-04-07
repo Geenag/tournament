@@ -4,7 +4,7 @@ info:
   description: "API to create and retrieve Products"
   version: "1.0.0"
 servers:
-  - url: "http://0.0.0.0:8080"
+  - url: "http://0.0.0.0:8080/swagger-ui/index.html"
 paths:
   /player:
     post:
@@ -16,6 +16,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Player"
+              properties:
+                pseudo:
+                  type : string
       responses:
         "201":
           description: "Created"
@@ -25,12 +28,12 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: "Player saved successfully"
-  /player/{id}:
+                  value: "Joueur $pseudo créé et stocké"
+  /player/{pseudo}:
     get:
-      description: "Returns a player by the ID"
+      description: "Returns a player by the pseudo"
       parameters:
-        - name: "id"
+        - name: "pseudo"
           in: "path"
           required: true
           schema:
@@ -48,10 +51,13 @@ components:
       type: "object"
       properties:
         id:
-          type: "integer"
-          format: "int32"
-        name:
           type: "string"
-        price:
+          format: "int32"
+        pseudo:
+          type: "string"
+        score:
           type: "number"
-          format: "double"
+          format: "int32"
+        ranking:
+          type: "number"
+          format: "int32"
