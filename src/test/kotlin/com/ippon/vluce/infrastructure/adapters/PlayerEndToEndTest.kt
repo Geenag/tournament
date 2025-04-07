@@ -1,6 +1,7 @@
 package com.ippon.vluce.infrastructure.adapters
 
 import com.ippon.vluce.application.playerUseCaseModule
+import com.ippon.vluce.domain.model.Player
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.infrastructure.adapters.driven.PlayerMongoRepositoryImpl
 import com.ippon.vluce.infrastructure.adapters.driving.dto.PlayerDTO
@@ -105,6 +106,43 @@ class PlayerAdapterTI: DescribeSpec ({
                 val ranking: List<PlayerDTO> = response.body()
                 ranking.first().pseudo shouldBe "joueur003"
                 ranking.last().pseudo shouldBe "joueur001"
+            }
+        }
+
+        it("should return player with ranking 2 when added in second and same score") {
+            testApplication {
+                environment {
+                    config = MapApplicationConfig("ktor.environment" to "dev")
+                }
+                application {
+                    configureRouting()
+                    configureSerialization()
+                }
+                val client = createClient {
+                    install(ContentNegotiation) {
+                        json()
+                    }
+                }
+                client.post("/tournament/player") {
+                    contentType(ContentType.Application.Json)
+                    setBody(PlayerDTO(pseudo = "joueur004"))
+                }
+                client.post("/tournament/player") {
+                    contentType(ContentType.Application.Json)
+                    setBody(PlayerDTO(pseudo = "joueur005"))
+                }
+                client.put("/tournament/player/joueur004") {
+                    contentType(ContentType.Application.Json)
+                    setBody(50)
+                }
+                client.put("/tournament/player/joueur005") {
+                    contentType(ContentType.Application.Json)
+                    setBody(50)
+                }
+                val response = client.get("/tournament/player/joueur005")
+                response shouldHaveStatus HttpStatusCode.OK
+                val joueur002: Player = response.body()
+                joueur002.ranking shouldBe 2
             }
         }
     }
