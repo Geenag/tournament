@@ -1,0 +1,63 @@
+openapi: "3.0.3"
+info:
+  title: "Products API"
+  description: "API to create and retrieve Products"
+  version: "1.0.0"
+servers:
+  - url: "http://0.0.0.0:8080/swagger-ui/index.html"
+paths:
+  /player:
+    post:
+      description: "Creates a new player"
+      requestBody:
+        description: "A JSON object that represents a player"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Player"
+              properties:
+                pseudo:
+                  type : string
+      responses:
+        "201":
+          description: "Created"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Joueur $pseudo créé et stocké"
+  /player/{pseudo}:
+    get:
+      description: "Returns a player by the pseudo"
+      parameters:
+        - name: "pseudo"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Player"
+components:
+  schemas:
+    Player:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "int32"
+        pseudo:
+          type: "string"
+        score:
+          type: "number"
+          format: "int32"
+        ranking:
+          type: "number"
+          format: "int32"
