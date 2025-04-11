@@ -39,6 +39,8 @@ Livraison via Git.
 
 Les spécifications actuelles concernant une égalité de score sont couvertes par un test end-to-end ("Player module end to end should return player with ranking 2 when added in second and same score".)
 
+- Intégrer le plugin StatusPages pour gérer les exceptions plus proprement
+
 - testApplication est appelé 1 fois par cas de test pour les tests côté serveur (PlayerAdapterTI et PlayerEndToEndTest). 
 
 Cette manière de faire pourrait sûrement être améliorée en créant une fonction qui contiendrait la configuration et serait appelée en début de chaque testcase.
