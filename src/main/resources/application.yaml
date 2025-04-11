@@ -5,4 +5,4 @@ ktor:
     deployment:
         port: 8080
     mongodb:
-        uri: "mongodb+srv://Cluster92613:uP1bRLTiNZFwYqLJ@clustervlu.vxjrghe.mongodb.net"
+        uri: "$MONGO_URI:"
