@@ -39,13 +39,16 @@ Livraison via Git.
 
 Les spécifications actuelles concernant une égalité de score sont couvertes par un test end-to-end ("Player module end to end should return player with ranking 2 when added in second and same score".)
 
+- Intégrer le plugin StatusPages pour gérer les exceptions plus proprement
+
 - testApplication est appelé 1 fois par cas de test pour les tests côté serveur (PlayerAdapterTI et PlayerEndToEndTest). 
 
 Cette manière de faire pourrait sûrement être améliorée en créant une fonction qui contiendrait la configuration et serait appelée en début de chaque testcase.
 
 - Documenter tous les endpoints pour Swagger
-- Optimiser le script launch.sh pour build uniquement si des modifications sont détectées / lancer l'application dans un conteneur Docker
-- Mettre en place une CI avec Gitlab-CI 
+- Lancer l'application dans un conteneur Docker ?
+- Mettre en place une CI
+
 ---
 
 This project was created using the [Ktor Project Generator](https://start.ktor.io).
@@ -77,9 +80,9 @@ Liste des bibliothèques utilisées par le projet :
 
 Pour build ou lancer l'application, utiliser une de ces commandes :
 
-| Task              | Description                                             |
-|-------------------|---------------------------------------------------------|
-| `./gradlew build` | Build everything                                        |
-| `./gradlew test`  | Run the tests (make sure to have docker daemon running) |
-| `./gradlew run`   | Run the server                                          |
-| `./launch.sh`     | Run the server from existing installation if exists     |
+| Task              | Description                                                                                |
+|-------------------|--------------------------------------------------------------------------------------------|
+| `./gradlew build` | Build everything                                                                           |
+| `./gradlew test`  | Run the tests (make sure to have a docker daemon running)                                  |
+| `./gradlew run`   | Run the server                                                                             |
+| `./launch.sh`     | Run the server from existing installation if exists without changes or build one otherwise |

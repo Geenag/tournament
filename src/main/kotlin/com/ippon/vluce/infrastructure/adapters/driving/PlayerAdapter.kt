@@ -1,6 +1,7 @@
 package com.ippon.vluce.infrastructure.adapters.driving
 
 import com.ippon.vluce.domain.usecases.*
+import com.ippon.vluce.domain.usecases.exceptions.PlayerException
 import com.ippon.vluce.infrastructure.adapters.driving.dto.PlayerDTO
 import com.ippon.vluce.infrastructure.adapters.driving.dto.mapper.toPlayerDTO
 import com.mongodb.MongoException
@@ -26,8 +27,10 @@ fun Route.playerRouting() {
             try {
                 createPlayerUseCase.execute(pseudo)
                 call.respondText("Joueur $pseudo créé et stocké", status = HttpStatusCode.Created)
-            } catch (exception: MongoWriteException) {
-                call.respondText("Le pseudo \"$pseudo\" est déjà utilisé par un joueur. Veuillez en choisir un autre.")
+            } catch (exception: PlayerException) {
+                call.respondText(exception.message
+                    ?: "Une erreur inattendue est survenue, réessayez ou contactez le support",
+                    status = HttpStatusCode.Conflict)
             }
         }
         put("{pseudo?}") {
@@ -36,16 +39,23 @@ fun Route.playerRouting() {
             try {
                 changePlayerScoreUseCase.execute(pseudo, score)
                 call.respondText("Score du joueur $pseudo modifié",status = HttpStatusCode.OK)
-            } catch (exception: MongoException) {
-                call.respondText("Pas de joueur trouvé avec le pseudo \"$pseudo\"")
+            } catch (exception: PlayerException) {
+                call.respondText(exception.message
+                    ?: "Une erreur inattendue est survenue, réessayez ou contactez le support",
+                    status = HttpStatusCode.BadRequest)
             }
         }
         get("{pseudo?}"){
             val pseudo = call.parameters["pseudo"]
                 ?: return@get call.respondText("Pseudo manquant", status = HttpStatusCode.BadRequest)
-            val player = getPlayerInformationsUseCase.execute(pseudo)
-                ?: return@get call.respondText  ("Pas de joueur trouvé avec le pseudo \"$pseudo\"", status = HttpStatusCode.BadRequest)
-            call.respond(player)
+            try {
+                val player = getPlayerInformationsUseCase.execute(pseudo)
+                call.respond(player)
+            } catch (exception: PlayerException) {
+                call.respondText(exception.message
+                    ?: "Une erreur inattendue est survenue, réessayez ou contactez le support",
+                    status = HttpStatusCode.BadRequest)
+            }
         }
         get("ranking") {
             val listPlayer = getRankingUseCase.execute()

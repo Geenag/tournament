@@ -13,8 +13,12 @@ fun Application.configureFrameworks() {
         modules(
             module {
                 single {
-                    environment.config.propertyOrNull("ktor.mongodb.uri")?.getString()
-                        ?: throw RuntimeException("Failed to access MongoDB URI")
+                    environment.config.propertyOrNull("ktor.mongodb.uri")?.getString()?.takeIf { it.isNotBlank() }
+                        ?: run {
+                            println("MONGO_URI is undefined. Please enter a valid URI :")
+                            readlnOrNull()?.takeIf { it.isNotBlank() }
+                                ?: throw RuntimeException("Failed to access MongoDB URI")
+                        }
                 }
             },
             playerRepositoryModule,

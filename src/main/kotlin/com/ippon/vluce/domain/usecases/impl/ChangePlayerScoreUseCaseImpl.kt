@@ -2,6 +2,7 @@ package com.ippon.vluce.domain.usecases.impl
 
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.usecases.ChangePlayerScoreUseCase
+import com.ippon.vluce.domain.usecases.exceptions.PlayerException
 import com.mongodb.MongoException
 import org.koin.java.KoinJavaComponent
 
@@ -13,7 +14,7 @@ class ChangePlayerScoreUseCaseImpl: ChangePlayerScoreUseCase {
         try {
             playerRepository.updateScoreByPseudo(pseudo, score)
         } catch (exception: MongoException) {
-            throw exception
+            throw PlayerException.NoSuchPseudoException(pseudo)
         }
     }
 

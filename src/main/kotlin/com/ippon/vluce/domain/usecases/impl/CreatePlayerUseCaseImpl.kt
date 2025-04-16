@@ -2,6 +2,7 @@ package com.ippon.vluce.domain.usecases.impl
 
 import com.ippon.vluce.domain.ports.driven.PlayerRepository
 import com.ippon.vluce.domain.usecases.CreatePlayerUseCase
+import com.ippon.vluce.domain.usecases.exceptions.PlayerException
 import com.mongodb.MongoWriteException
 import org.koin.java.KoinJavaComponent
 
@@ -13,7 +14,7 @@ class CreatePlayerUseCaseImpl: CreatePlayerUseCase {
         try {
             playerRepository.addPlayer(pseudo)
         } catch (exception: MongoWriteException) {
-            throw exception
+            throw PlayerException.PseudoAlreadyExistsException(pseudo)
         }
     }
 
